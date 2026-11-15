@@ -117,6 +117,10 @@ The tests build a three-stock index with a known payout. They check that:
 3. Earnings and book values from company filings (CVM), to compute the index P/E and P/B from its constituents.
 4. More indices and markets, following the same pattern.
 
+## Acknowledgements
+
+The program uses only Python's standard library, so it has no third-party code to credit. All data comes from [B3](https://www.b3.com.br): its index portfolio and statistics pages, and its COTAHIST historical quotes files, read using the field layout B3 publishes for them.
+
 ## License
 
 The code is released under the [MIT License](LICENSE). The market data it downloads belongs to B3, is subject to B3's terms of use, and is not included in this repository.
