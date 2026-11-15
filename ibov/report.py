@@ -229,11 +229,17 @@ def checks(analysis: Analysis) -> list[tuple[str, str, bool | None]]:
         named = analysis.divisor_pts - analysis.residual_pts
         passed = analysis.reconciled_payouts or abs(analysis.residual_pts) <= CONTRIB_TOL_PTS
 
+        if len(analysis.adjusted) == 0:
+            explained = "no payouts went ex"
+        elif len(analysis.adjusted) == 1:
+            explained = f"1 named payout explains {pts(named)} pts"
+        else:
+            explained = f"{len(analysis.adjusted)} named payouts explain {pts(named)} pts"
+
         results.append((
             f"Previous close ({analysis.prev_date}) priced with this session's portfolio",
             f"{pts(analysis.divisor_pts, 2, True)} pts ({gap_pct:+.3f}%) above the official close; "
-            f"{len(analysis.adjusted)} named payouts explain {pts(named)} pts, "
-            f"residual {pts(analysis.residual_pts, 2, True)}",
+            f"{explained}, residual {pts(analysis.residual_pts, 2, True)}",
             passed,
         ))
     else:

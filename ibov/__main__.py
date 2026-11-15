@@ -252,8 +252,8 @@ def cmd_report(paths: Paths, connection: sqlite3.Connection, args: argparse.Name
     html_path.write_text(build_html(analysis, db.index_history(connection), provenance, warnings), encoding="utf-8")
     write_csv(analysis, paths.reports / f"ibov_{session_date}.csv")
 
-    print(f"Session {session_date}: official {analysis.official}, rebuilt {analysis.rebuilt}, "
-          f"difference {analysis.diff_pts}")
+    print(f"Session {session_date}: official {describe(analysis.official, 2)}, "
+          f"rebuilt {describe(analysis.rebuilt, 2)}, difference {describe(analysis.diff_pts, 4)}")
 
     if analysis.adjusted:
         payouts = []
@@ -279,6 +279,14 @@ def cmd_report(paths: Paths, connection: sqlite3.Connection, args: argparse.Name
         webbrowser.open(html_path.resolve().as_uri())
 
     return 0
+
+
+# A number for the terminal, or a note when it isn't available yet
+def describe(value: float | None, decimals: int) -> str:
+    if value is None:
+        return "not available"
+
+    return f"{value:,.{decimals}f}"
 
 
 # The raw file behind every number in the report
