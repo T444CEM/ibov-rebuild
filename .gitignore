@@ -1,0 +1,7 @@
+# Downloaded B3 files, the database and the reports stay on your machine:
+# the market data belongs to B3 and is not redistributed here.
+data/
+*.db
+*.sqlite
+__pycache__/
+*.pyc
